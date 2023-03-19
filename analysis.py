@@ -9,7 +9,7 @@ import math
 def NPCR(img1, img2):
     """
     Calculate the NPCR value
-    Bigger the better
+    Greater value is better
     [0-100]
     Parameters:
         img1 = Encrypted image 1

@@ -4,8 +4,8 @@ import math
 
 
 def key_gen(r, c, x=None):
-    """ 
-    Generate logistic chaotic map
+    """
+    Generate logistic chaotic map used for key in range[0-255]
     Argumets:
         r : row of the 2d map required
         c : col of the 2d map required
@@ -15,46 +15,16 @@ def key_gen(r, c, x=None):
      """
     R = 3.99
     random_float = random.uniform(0, 1)
-    x = 0.4+(random_float/5)
+    if x is None:
+        x = 0.4+(random_float/5)
     key = np.zeros((r, c))
+    for i in range(1000):
+        x = x*R*(1-x)
     for i in range(0, r):
         for j in range(0, c):
             x = x*R*(1-x)
-            key[i][j] = x*255
-
+            key[i][j] = round(((x)*(255)))
     return key
-
-
-def pixel_key(r, x=None):
-    """ 
-    Generate logistic chaotic map
-    Argumets:
-        r : row of the 2d map required
-        c : col of the 2d map required
-        x :  initial value of x in logistic function
-    Returns:
-        matrix of logictic chaotic map
-     """
-    R = 3.99
-    random_float = random.uniform(0, 1)
-    x = 0.4+(random_float/5)
-    generated_key = np.zeros(r)
-    for i in range(0, r):
-        x = x*R*(1-x)
-        generated_key[i] = x*511
-    generated_key = np.trunc(generated_key).astype(int)
-    generated_key = generated_key[(generated_key <= 511)]
-    keys = []
-    for value in generated_key:
-        if value not in keys:
-            keys.append(value)
-    keys_set = set(keys)
-    vals = set(range(512))
-    rest = vals.difference(keys_set)
-    for i in rest:
-        x = random.randint(0, len(keys))
-        keys.insert(x, i)
-    return keys
 
 
 def keyxor(matrix, key):
@@ -71,3 +41,31 @@ def keyxor(matrix, key):
             matrix[i][j] = int(matrix[i][j]) ^ int(key[i][j])
 
     return matrix
+
+
+def coordinate_generator(r, c, x=None):
+    """
+    Generate logistic chaotic map used for key in range[0-255]
+    Argumets:
+        r : row of the 2d map required
+        c : col of the 2d map required
+        x :  initial value of x in logistic function
+    Returns:
+        matrix of logictic chaotic map
+     """
+    R = 4
+    all = set()
+    random_float = random.uniform(0, 1)
+    if x is None:
+        x = 0.4+(random_float/5)
+    key = np.full((r, c), -1, dtype=int)
+    for i in range(1000):
+        x = x*R*(1-x)
+    for i in range(0, r):
+        for j in range(0, c):
+            while (key[i, j] == -1):
+                x = x*R*(1-x)
+                if math.trunc(x*c*r) not in all:
+                    key[i][j] = math.trunc(x*c*r)
+                    all.add(key[i, j])
+    return key, x

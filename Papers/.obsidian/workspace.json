@@ -4,20 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "d51bce9d048b48f0",
+        "id": "c8b2644c9f64a943",
         "type": "tabs",
         "children": [
           {
-            "id": "115fff59dfb74c0e",
+            "id": "2fd9cb689d43cb44",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "empty",
+              "state": {}
+            }
+          },
+          {
+            "id": "47d1c226e597a7fc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
               "state": {
-                "file": "Literature/Traversal in a Latin Square/2202.12559.pdf"
+                "file": "Literature/Crypt Analysis.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -36,7 +47,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "correlation coe",
+                "query": "uaci",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -63,8 +74,7 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
@@ -84,7 +94,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Literature/Traversal in a Latin Square/2202.12559.pdf"
+                "file": "Literature/Crypt Analysis.md"
               }
             }
           },
@@ -94,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Literature/Traversal in a Latin Square/2202.12559.pdf",
+                "file": "Literature/Crypt Analysis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +121,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Literature/Traversal in a Latin Square/2202.12559.pdf",
+                "file": "Literature/Crypt Analysis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,8 +161,13 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "115fff59dfb74c0e",
+  "active": "47d1c226e597a7fc",
   "lastOpenFiles": [
+    "Literature/Chaotic Image Encryption/Chaos Sources.md",
+    "Literature/Chaotic Image Encryption/Chaos Dimensions.md",
+    "Literature/Application.md",
+    "Literature/Crypt Analysis.md",
+    "Literature/Traversal in a Latin Square/2202.12559.pdf",
     "2209.01105.pdf",
     "2208.07825.pdf",
     "2208.07635.pdf",
@@ -161,12 +176,10 @@
     "Notes/Crypto.md",
     "Literature/Chaotic Image Encryption based in information entropy/sankpal2014.pdf",
     "Literature/Traversal in a Latin Square/Introduction.md",
-    "Literature/Crypt Analysis.md",
     "Literature/Chaotic Image Encryption/Primitives.md",
     "Literature/IEHC/Untitled.md",
     "Notes/Transforms.md",
     "Notes/Untitled 1.md",
-    "Literature/Application.md",
     "Literature/Traversal in a Latin Square/Latin Square.md"
   ]
 }
