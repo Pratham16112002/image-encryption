@@ -89,6 +89,7 @@ def histogram(img1, img2):
     plt.figure()
     plt.subplot(121), plt.imshow(img1, 'gray')
     plt.title('Original Image')
+    hist, bins = np.histogram(img1.ravel(), 256, [0, 256])
     plt.subplot(122), plt.hist(img1.ravel(), 256, [0, 256])
     plt.title('Histogram of Original Image')
 

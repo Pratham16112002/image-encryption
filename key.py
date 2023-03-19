@@ -69,3 +69,18 @@ def coordinate_generator(r, c, x=None):
                     key[i][j] = math.trunc(x*c*r)
                     all.add(key[i, j])
     return key, x
+
+
+def henon(matrix):
+    a = 1.4
+    b = 0.3
+    height, width = matrix.shape
+    output_matrix = np.zeros((height, width))
+    for i in range(height):
+        for j in range(width):
+            x_n = matrix[i][j]
+            y_n = matrix[i][j]
+            x_n1 = 1 - a * x_n**2 + y_n
+            y_n1 = b * x_n
+            output_matrix[i][j] = x_n1
+    return output_matrix
