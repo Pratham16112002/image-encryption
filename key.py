@@ -13,7 +13,7 @@ def key_gen(r, c, x=None):
     Returns:
         matrix of logictic chaotic map
      """
-    R = 3.99
+    R = 4
     random_float = random.uniform(0, 1)
     if x is None:
         x = 0.4+(random_float/5)
@@ -71,16 +71,37 @@ def coordinate_generator(r, c, x=None):
     return key, x
 
 
-def henon(matrix):
-    a = 1.4
-    b = 0.3
+def henon_map(x, y, a=1.4, b=0.3):
+    """Applies the Henon map to coordinates x, y with parameters a and b."""
+    x_new = y + 1 - a * x**2
+    y_new = b * x
+    return x_new, y_new
+
+
+def applyhenon(matrix, iterations):
+    nrows, ncols = matrix.shape
+    for _ in range(iterations):
+        for i in range(nrows):
+            for j in range(ncols):
+                x, y = henon_map(i/nrows, j/ncols)
+                new_i, new_j = int(x * nrows), int(y * ncols)
+                if new_i >= nrows:
+                    new_i = nrows - 1
+                if new_j >= ncols:
+                    new_j = ncols - 1
+                matrix[i, j] = matrix[new_i, new_j]
+    return matrix
+
+
+def arnold(matrix, iteration):
+    K = 5
     height, width = matrix.shape
-    output_matrix = np.zeros((height, width))
-    for i in range(height):
-        for j in range(width):
-            x_n = matrix[i][j]
-            y_n = matrix[i][j]
-            x_n1 = 1 - a * x_n**2 + y_n
-            y_n1 = b * x_n
-            output_matrix[i][j] = x_n1
-    return output_matrix
+    temp = np.empty((height, width), dtype=int)
+    for i in range(iteration):
+        for x in range(height):
+            for y in range(height):
+                x_new = (x + y) % height
+                y_new = (K*x + y) % height
+                temp[x, y] = matrix[x_new, y_new]
+    return temp
+
