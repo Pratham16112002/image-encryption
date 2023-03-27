@@ -82,13 +82,14 @@ def applyhenon(matrix, iterations):
     nrows, ncols = matrix.shape
     for _ in range(iterations):
         for i in range(nrows):
+            r = matrix[i]
+            row_sum = np.sum(r, axis=0)
             for j in range(ncols):
-                x, y = henon_map(i/nrows, j/ncols)
-                new_i, new_j = int(x * nrows), int(y * ncols)
-                if new_i >= nrows:
-                    new_i = nrows - 1
-                if new_j >= ncols:
-                    new_j = ncols - 1
+                x, y = henon_map(i/row_sum, j/row_sum)
+                print(x, y)
+                # print(((x % 1) * nrows), ((y % 1) * nrows))
+                new_i, new_j = int((x % 1) * nrows), int((y % 1) * ncols)
+                # print(new_i, new_j)
                 matrix[i, j] = matrix[new_i, new_j]
     return matrix
 
@@ -105,3 +106,60 @@ def arnold(matrix, iteration):
                 temp[x, y] = matrix[x_new, y_new]
     return temp
 
+
+def tent_map(x, p):
+    if x < p:
+        return x/p
+    else:
+        return (1-x)/(1-p)
+
+
+def pxsum(matrix):
+    sum = 0
+    height, width = matrix.shape
+    for i in range(height):
+        for j in range(width):
+            sum += matrix[i, j]
+    return sum
+
+
+def mmap(x=None, p=None):
+    if x is None:
+        x = random.uniform(0, 1)
+    if p is None:
+        p = random.uniform(0.25, 0.5)
+    if x >= 0 and x <= 0.5:
+        xn = (x/p)*(2-(x/p))
+    if x > 0.5 and x <= 1:
+        xn = ((1-x)/p)*(2-((1-x)/p))
+    pn = 0.25 + ((p+x) % 0.25)
+    return xn, pn
+
+
+def sbox(sum, r, c, x=None, p=None):
+    rangelist = list(range(256))
+    sbox = []
+    if x is None:
+        x = random.uniform(0, 1)
+    if p is None:
+        p = random.uniform(0.25, 0.5)
+    x = ((x+(sum/(255 * r * c))) % 1)
+    initialx, initialp = x, p
+    for _ in range(pow(10, 3)):
+        x, p = mmap(x, p)
+    while (len(rangelist) > 0):
+        x, p = mmap(x, p)
+        index = math.floor(x*len(rangelist))
+        sbox.append(rangelist[index])
+        del rangelist[index]
+    return sbox, initialx, initialp, x, p
+
+
+def fsbox(matrix):
+    sbox = np.empty((0, 256), dtype=int)
+    matrix = np.array(matrix)
+    height = len(matrix)
+    for i in range(height):
+        shifted = np.roll(matrix, i)
+        sbox = np.vstack((sbox, shifted))
+    return sbox
