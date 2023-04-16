@@ -235,6 +235,3 @@ def int_binary(x):
 
 def binary_int(x):
     return int(x, 2)
-
-
-print(sbox(20, 4, 4, 16))
