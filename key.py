@@ -136,8 +136,8 @@ def mmap(x=None, p=None):
     return xn, pn
 
 
-def sbox(sum, r, c, x=None, p=None):
-    rangelist = list(range(256))
+def sbox(sum, r, c, s, x=None, p=None):
+    rangelist = list(range(s))
     sbox = []
     if x is None:
         x = random.uniform(0, 1)
@@ -235,3 +235,6 @@ def int_binary(x):
 
 def binary_int(x):
     return int(x, 2)
+
+
+print(sbox(20, 4, 4, 16))
