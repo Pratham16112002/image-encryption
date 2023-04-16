@@ -4,6 +4,7 @@ import numpy as np
 import key
 import analysis
 import math
+import csv
 # Loading the image
 img = Image.open('Lena.png')
 # making an array of the original image
@@ -46,23 +47,33 @@ def dnaencoding(matrix, x, p, mkey=key.mkey_gen(512, 512)):
     return matrix
 
 
-def findshifted(sbox, x, prevshift, pixel):
-    shifts = ((math.floor(x*256))+prevshift) % 256
+en = open('en.csv', 'w', newline='')
+en_writer = csv.writer(en)
+de = open('de.csv', 'w', newline='')
+de_writer = csv.writer(de)
+row = ["matrix[i,j]", "(i,j)", "x", "px", "(I,J)", "shifts"]
+en_writer.writerow(row)
+de_writer.writerow(row)
+
+
+def findshifted(sbox, x, prevshift, pixel, prevval):
+    shifts = ((prevval+math.floor(x*256))+prevshift) % 256
     result = np.roll(sbox, shifts)
-    return result[pixel], shifts, result
+    return result[pixel], shifts, result, pixel
 
 
-def finddeshifted(sbox, x, prevshift, pixel):
-    shifts = ((math.floor(x*256))+prevshift) % 256
+def finddeshifted(sbox, x, prevshift, pixel, prevval):
+    shifts = ((prevval+math.floor(x*256))+prevshift) % 256
     result = np.roll(sbox, shifts)
     s = list(result)
     res = s.index(pixel)
-    return res, shifts, result
+    return res, shifts, result, res
 
 
 def sub(matrix, sbox, x, p, final_img):
     print("x", x)
     prevshift = 0
+    prevval = 0
     for _ in range(pow(10, 3)):
         x, p = key.mmap(x, p)
     print(x)
@@ -72,25 +83,31 @@ def sub(matrix, sbox, x, p, final_img):
     for i in range(height):
         for j in range(width):
             x, p = key.mmap(x, p)
-            px, prevshift, sbox = findshifted(
-                sbox, x, prevshift, matrix[i, j])
+            px, prevshift, sbox, prevval = findshifted(
+                sbox, x, prevshift, matrix[i, j], prevval)
             if (x <= 0.5):
+                row = [matrix[i, j], "({},{})".format(
+                    i, j), x, px, "({},{})".format(bi, bj), prevshift]
                 final_img[bi, bj] = px
                 bj += 1
                 if (bj >= 512):
                     bj = 0
                     bi += 1
             if (x > 0.5):
+                row = [matrix[i, j], "({},{})".format(
+                    i, j), x, px, "({},{})".format(ei, ej), prevshift]
                 final_img[ei, ej] = px
                 ej -= 1
                 if (ej < 0):
                     ej = 511
                     ei -= 1
+            en_writer.writerow(row)
     return final_img
 
 
 def decryption(matrix, sbox, x, p):
     print("x", x)
+    prevval = 0
     height, width = matrix.shape
     reverse = np.full((height, width), -1, dtype=np.uint8)
     prevshift = 0
@@ -103,23 +120,27 @@ def decryption(matrix, sbox, x, p):
     for i in range(height):
         for j in range(width):
             x, p = key.mmap(x, p)
-
             if (x <= 0.5):
-                px, prevshift, sbox, = finddeshifted(
-                    sbox, x, prevshift, matrix[bi, bj])
+                px, prevshift, sbox, prevval = finddeshifted(
+                    sbox, x, prevshift, matrix[bi, bj], prevval)
                 reverse[i, j] = px
+                row = [matrix[bi, bj], "({},{})".format(
+                    bi, bj), x, px, "({},{})".format(i, j), prevshift]
                 bj += 1
                 if (bj >= 512):
                     bj = 0
                     bi += 1
             if (x > 0.5):
-                px, prevshift, sbox = finddeshifted(
-                    sbox, x, prevshift, matrix[ei, ej])
+                px, prevshift, sbox, prevval = finddeshifted(
+                    sbox, x, prevshift, matrix[ei, ej], prevval)
                 reverse[i, j] = px
+                row = [matrix[ei, ej], "({},{})".format(
+                    ei, ej), x, px, "({},{})".format(i, j), prevshift]
                 ej -= 1
                 if (ej < 0):
                     ej = 511
                     ei -= 1
+            de_writer.writerow(row)
     return reverse
 
 
@@ -149,3 +170,6 @@ k2.save('./pics/final14042.png')
 dec = decryption(final_img, sbox, x, p)
 k3 = Image.fromarray(dec)
 k3.save("./pics/decrypted1404.png")
+
+en.close()
+de.close()
