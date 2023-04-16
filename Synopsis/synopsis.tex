@@ -1,6 +1,6 @@
 % Preamble
 % ---
-\documentclass[11pt,a4paper,english]{article}
+\documentclass[12pt,a4paper,english]{article}
 
 % Packages
 % ---
@@ -11,6 +11,8 @@
 \usepackage{graphicx} % Add pictures to your document
 \usepackage{listings} % Source code formatting and highlighting
 \usepackage{makeidx}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+
 \bibliographystyle{plain}
 
 % ---
@@ -69,6 +71,8 @@
 Encryption of images is important in today's digital world as it helps to protect sensitive and confidential information contained in images from unauthorized access. With the increasing use of digital images for personal, business and government purposes, there is a growing need to ensure that this data is protected from hackers, cyber-criminals and other malicious actors who might use the information for their own purposes. Encryption provides a secure and effective means of protecting images by transforming them into an unreadable form, making it difficult for unauthorized individuals to access or view the original image. This helps to ensure the privacy and confidentiality of the information contained in the image and reduces the risk of data breaches and theft.
 \subsection{Encryption}
 Encryption is the process of converting plaintext into an unreadable form (ciphertext) to protect its confidentiality and prevent unauthorized access to its content. It uses mathematical algorithms (cipher) and a key to transform the data. Only those with the corresponding decryption key can reverse the process and access the original plaintext. Encryption helps to ensure the privacy and security of data transmitted over networks or stored on devices.
+\subsection{Image Encryption}
+Image encryption involves transforming an image into a coded form, making it unreadable to anyone except the intended recipient. This is achieved through the use of encryption algorithms that employ various techniques such as substitution, permutation, diffusion, and confusion. The encrypted image can only be decrypted by the recipient who has the decryption key. Image encryption is used to protect the confidentiality and integrity of images in various applications such as secure image transmission, digital watermarking, and multimedia security. It ensures that images are protected from unauthorized access and tampering, making it a crucial aspect of digital communication.
 \subsection{Chaos Theory}
 Chaos theory is a branch of mathematics that studies the behavior of dynamic systems that are highly sensitive to initial conditions, leading to seemingly random patterns and unpredictable behavior. It deals with how small differences in initial conditions can lead to vastly different outcomes over time, which is often referred to as the butterfly effect. Chaos theory has applications in various fields, such as physics, economics, and weather forecasting.
 
@@ -82,13 +86,13 @@ Chaos theory provides several important features to image encryption, including:
 Overall, chaos theory provides a means of creating secure, efficient, and easy-to-implement image encryption algorithms that can help protect sensitive information transmitted over communication networks.
 \newpage
 \section{Motivation}
-
-Our motivation for developing a new chaos-based image encryption technique is a result of our passion for cryptography and our fascination with chaos theory. I believe that this research will not only advance the field of cryptography but also help to improve the security of sensitive information. The challenge of developing a new image encryption technique appeals to me and I am eager to explore the unique properties of chaos-based encryption and apply them to image encryption. This work presents a significant challenge and an opportunity for me to push the boundaries of what is currently possible. Successfully developing a new chaos-based image encryption technique would be a major accomplishment for me, both professionally and personally, and would be a source of pride and satisfaction in our career as a researcher.
+Our motivation for developing a new chaos-based image encryption technique is a result of our shared passion for cryptography and fascination with chaos theory. We believe that this research will not only advance the field of cryptography but also help to improve the security of sensitive information. The challenge of developing a new image encryption technique appeals to us and we are eager to explore the unique properties of chaos-based encryption and apply them to image encryption. This work presents a significant challenge and an opportunity for us to push the boundaries of what is currently possible. Successfully developing a new chaos-based image encryption technique would be a major accomplishment for us, both professionally and personally, and would be a source of pride and satisfaction in our careers as researchers.
 \paragraph{}
 \newpage
 \section{Project Objectives}
-\paragraph{}
-The objectives of the project are out lined as follows :-
+The objectives of the project are out lined as follows :-\\
+\newline
+\textbf{General}\\
 \begin{enumerate}
     \item To develop an efficient and secure image encryption system for medical images that meets the requirements of the hospital.
 
@@ -108,6 +112,19 @@ The objectives of the project are out lined as follows :-
 
     \item To ensure that the encryption system can scale to accommodate the growing needs of the hospital over time.\newpage
 \end{enumerate}
+\textbf{Chaotic}
+\begin{enumerate}
+    \item Ensure confidentiality: The primary objective of image encryption is to ensure that the information contained within the image remains confidential and can only be accessed by authorized users. Encryption using chaotic maps helps achieve this objective by making it difficult for unauthorized users to access or read the encrypted data.
+
+    \item Provide integrity: Image encryption using chaotic maps also ensures the integrity of the image by detecting any unauthorized modification or tampering with the image. This objective is achieved by including error-detection and correction codes in the encryption process.
+
+    \item Increase resistance to attacks: Chaotic maps-based image encryption techniques are designed to increase resistance to attacks such as brute-force attacks, statistical attacks, and differential attacks, among others. The objective is to create an encryption scheme that is difficult to break even with advanced computing power.
+
+    \item Reduce computational complexity: Another objective of image encryption using chaotic maps is to reduce the computational complexity of the encryption algorithm. This is important for real-time applications where encryption and decryption need to be performed quickly.
+
+    \item Enhance robustness: Image encryption using chaotic maps also aims to enhance the robustness of the encryption scheme by ensuring that it is resistant to various types of noise, interference, and distortions that may occur during transmission or storage.
+\end{enumerate}
+\newpage
 \section{Methodology}
 \paragraph{}
 \begin{enumerate}

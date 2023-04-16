@@ -30,6 +30,31 @@ sbox, initialx, initialp, x, p = key.sbox(sum, height, width)
 # fsbox = key.fsbox(sbox)
 
 
+def dnaencoding(matrix, x, p, mkey=key.mkey_gen(512, 512)):
+    height, width = matrix.shape
+    for _ in range(10**3):
+        x, p = key.mmap(x, p)
+    for i in range(height):
+        for j in range(width):
+            x, p = key.mmap(x, p)
+            rule = math.floor(x*8)
+            value = key.int_binary(matrix[i, j])
+            key_value = key.int_binary(mkey[i, j])
+            pairs = [value[i:i+2] for i in range(0, len(value), 2)]
+            key_pairs = [key_value[i:i+2] for i in range(0, len(key_value), 2)]
+            modified_pairs = [key.dnavalues(
+                rule, pair) for pair in pairs]
+            modified_key_pairs = [key.dnavalues(
+                rule, pair) for pair in key_pairs]
+            final_pairs = [key.dnaxor(
+                modified_pairs[i], modified_key_pairs[i]) for i in range(4)]
+            final_pairs = [key.dnavalues(
+                rule, _, pair) for pair in final_pairs]
+            final_value = ''.join(final_pairs)
+            matrix[i, j] = key.binary_int(final_value)
+    return matrix
+
+
 def findshifted(sbox, x, val, prevshift):
     shifts = (val+(math.floor(x*256))+prevshift) % 256
     return sbox[shifts], shifts
@@ -62,7 +87,8 @@ def sub(matrix, sbox, x, p, final_img):
     return final_img
 
 
-final_img = sub(original_image_array, sbox, x, p, final_img)
+dnaencoded = dnaencoding(original_image_array, x, p)
+final_img = sub(dnaencoded, sbox, x, p, final_img)
 # final_img = key.applyhenon(final_img, 1)
 k = Image.fromarray(final_img)
 k.save('./pics/final2603.png')
@@ -78,18 +104,19 @@ lk = Image.fromarray(img2)
 lk.save("./pics/img2.png")
 final_img2 = np.zeros((512, 512), dtype=np.uint8)
 final_img2 = sub(img2, sbox, x, p, final_img2)
-print(final_img, "\n", final_img2)
-si = 0
-for i in range(height):
-    for j in range(width):
-        if (final_img[i, j] != final_img2[i, j]):
-            si += 1
-print(si)
+# print(final_img, "\n", final_img2)
+# si = 0
+# for i in range(height):
+#     for j in range(width):\
+#         if (final_img[i, j] != final_img2[i, j]):
+#             si += 1
+# print(si)
 print("CC: ", analysis.correlation_coefficient(original_image_array, final_img))
 analysis.histogram(original_image_array, final_img)
 npcr, uaci = analysis.NPCR_UACI_worker(final_img, final_img2)
 print("npcr: ", npcr, "%\tUaci: ", uaci, "%")
-print("Entropy", analysis.entropy(final_img))
-print("Entropy", analysis.entropy(original_image_array))
+print("Entropy encypted", analysis.entropy(final_img))
+print("DNA", analysis.entropy(dnaencoded))
+print("Entropy original", analysis.entropy(original_image_array))
 k2 = Image.fromarray(final_img2)
 k2.save('./pics/final26032.png')

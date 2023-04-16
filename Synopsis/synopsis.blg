@@ -3,46 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: synopsis.aux
 The style file: plain.bst
 Database file #1: Synopsis.bib
-Warning--empty journal in china2019image
-You've used 63 entries,
+You've used 20 entries,
             2118 wiz_defined-function locations,
-            806 strings with 17681 characters,
-and the built_in function-call counts, 28391 in all, are:
-= -- 2981
-> -- 1216
-< -- 39
-+ -- 503
-- -- 412
-* -- 1952
-:= -- 4324
-add.period$ -- 226
-call.type$ -- 63
-change.case$ -- 395
+            617 strings with 8037 characters,
+and the built_in function-call counts, 8536 in all, are:
+= -- 903
+> -- 339
+< -- 13
++ -- 138
+- -- 112
+* -- 567
+:= -- 1304
+add.period$ -- 71
+call.type$ -- 20
+change.case$ -- 116
 chr.to.int$ -- 0
-cite$ -- 64
-duplicate$ -- 1096
-empty$ -- 2232
-format.name$ -- 412
-if$ -- 6238
+cite$ -- 20
+duplicate$ -- 345
+empty$ -- 686
+format.name$ -- 112
+if$ -- 1887
 int.to.chr$ -- 0
-int.to.str$ -- 63
-missing$ -- 63
-newline$ -- 318
-num.names$ -- 126
-pop$ -- 456
+int.to.str$ -- 20
+missing$ -- 20
+newline$ -- 103
+num.names$ -- 40
+pop$ -- 132
 preamble$ -- 1
-purify$ -- 332
+purify$ -- 96
 quote$ -- 0
-skip$ -- 807
+skip$ -- 257
 stack$ -- 0
-substring$ -- 2303
-swap$ -- 394
-text.length$ -- 39
+substring$ -- 670
+swap$ -- 124
+text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 252
-warning$ -- 1
-while$ -- 286
-width$ -- 65
-write$ -- 732
-(There was 1 warning)
+type$ -- 80
+warning$ -- 0
+while$ -- 91
+width$ -- 22
+write$ -- 234

@@ -163,3 +163,75 @@ def fsbox(matrix):
         shifted = np.roll(matrix, i)
         sbox = np.vstack((sbox, shifted))
     return sbox
+
+
+def dnavalues(x, y, z=None):
+    values = [["00", "11", "10", "01"],
+              ["00", "11", "01", "10"],
+              ["11", "00", "10", "01"],
+              ["11", "00", "01", "10"],
+              ["10", "01", "00", "11"],
+              ["10", "01", "11", "00"],
+              ["01", "10", "00", "11"],
+              ["01", "10", "11", "00"],
+              ]
+    if z is not None:
+        if z == "A":
+            return values[x][0]
+        elif z == "T":
+            return values[x][1]
+        elif z == "G":
+            return values[x][2]
+        elif z == "C":
+            return values[x][3]
+    else:
+        i = values[x].index(str(y))
+        if i == 0:
+            return "A"
+        elif i == 1:
+            return "T"
+        elif i == 2:
+            return "G"
+        elif i == 3:
+            return "C"
+
+
+def dnaxor(x, y):
+    def getnum(z):
+        if z == "A":
+            return 0
+        elif z == "T":
+            return 1
+        elif z == "G":
+            return 2
+        elif z == "C":
+            return 3
+    values = [[0, 1, 2, 3], [1, 0, 3, 2], [2, 3, 1, 0], [3, 2, 1, 0]]
+    z = values[getnum(x)][getnum(y)]
+    if z == 0:
+        return "A"
+    elif z == 1:
+        return "T"
+    elif z == 2:
+        return "G"
+    elif z == 3:
+        return "C"
+
+
+def mkey_gen(r, c, x=None, p=None):
+    key = np.zeros((r, c), dtype=int)
+    for i in range(10**3):
+        x, p = mmap(x, p)
+    for i in range(0, r):
+        for j in range(0, c):
+            x, p = mmap(x, p)
+            key[i][j] = math.floor(((x)*(256)))
+    return key
+
+
+def int_binary(x):
+    return bin(x).replace("0b", "").zfill(8)
+
+
+def binary_int(x):
+    return int(x, 2)

@@ -11,6 +11,7 @@ matplotlib = "*"
 numpy = "*"
 jupyter = "*"
 autopep8 = "*"
+flake8 = "*"
 
 [dev-packages]
 ipykernel = "*"
